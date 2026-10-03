@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="referrer" content="no-referrer">
+    <title>CacheRoom</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="shell">
+      <header>
+        <p class="eyebrow">Peer-to-peer research prototype</p>
+        <h1>CacheRoom</h1>
+        <p class="subtitle">An ephemeral chat with no application server and no persistent message store.</p>
+      </header>
+
+      <section class="panel" id="setup">
+        <div class="grid two">
+          <label>
+            Display name
+            <input id="name" maxlength="32" autocomplete="off" placeholder="Researcher">
+          </label>
+          <label>
+            Room code
+            <input id="room-code" inputmode="numeric" maxlength="12" autocomplete="off" placeholder="12 digits">
+          </label>
+        </div>
+        <div class="actions">
+          <button id="create-room" class="primary">Create room</button>
+          <button id="join-room">Join room</button>
+          <button id="clear-everything" class="danger ghost">Clear local memory</button>
+        </div>
+        <p class="hint">The code is generated in memory only. It is not an internet rendezvous service.</p>
+      </section>
+
+      <section class="panel hidden" id="connection">
+        <div class="status-row">
+          <div>
+            <span class="label">Room</span>
+            <strong id="room-label"></strong>
+          </div>
+          <div>
+            <span class="label">Members</span>
+            <strong id="member-count">1</strong>
+          </div>
+          <div>
+            <span class="label">Buffer</span>
+            <strong>20 messages</strong>
+          </div>
+          <button id="leave" class="danger">Leave and wipe</button>
+        </div>
+
+        <div id="host-tools" class="signal-box hidden">
+          <h2>Invite a participant</h2>
+          <p class="hint">Create one offer per participant. Send the resulting text through a channel you trust, then paste their answer below.</p>
+          <div class="actions">
+            <button id="make-offer" class="primary">Create offer</button>
+            <button id="copy-signal">Copy signal</button>
+          </div>
+          <textarea id="signal-out" readonly placeholder="Offer appears here"></textarea>
+          <textarea id="signal-in" placeholder="Paste participant answer here"></textarea>
+          <button id="accept-answer">Accept answer</button>
+        </div>
+
+        <div id="guest-tools" class="signal-box hidden">
+          <h2>Join with an invite</h2>
+          <p class="hint">Paste the host's offer, create an answer, and send it back to the host.</p>
+          <textarea id="guest-in" placeholder="Paste host offer here"></textarea>
+          <div class="actions">
+            <button id="make-answer" class="primary">Create answer</button>
+            <button id="copy-answer">Copy answer</button>
+          </div>
+          <textarea id="guest-out" readonly placeholder="Answer appears here"></textarea>
+        </div>
+
+        <div class="chat hidden" id="chat">
+          <div class="chat-head">
+            <h2>Messages</h2>
+            <span id="transport">Waiting for a peer</span>
+          </div>
+          <div id="messages" class="messages" aria-live="polite"></div>
+          <form id="message-form" class="compose">
+            <input id="message" maxlength="2000" autocomplete="off" placeholder="Message stays in memory only">
+            <button class="primary">Send</button>
+          </form>
+        </div>
+      </section>
+
+      <p id="notice" class="notice" role="status"></p>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>
